@@ -6,6 +6,8 @@ toolkit:
   software: spark
   version: 2.2
   # environment: python
+  # Optional version for the environment
+  # environment_verion:
 
   # Optional docker repository(To bring your custom docker image. Just specify the Toolkit software, version and environemnt if using default images)
   # docker_repo: <name of docker image repo (for more information, see https://github.com/Azure/aztk/blob/master/docs/12-docker-image.md)>

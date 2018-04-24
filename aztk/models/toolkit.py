@@ -38,7 +38,7 @@ class Toolkit(ConfigurationBase):
     """
     def __init__(self, software: str, version: str, environment: str=None, environment_version: str=None, docker_repo=None):
         self.software = software
-        self.version = version
+        self.version = str(version)
         self.environment = environment
         self.environment_version = environment_version
         self.docker_repo = docker_repo
@@ -55,18 +55,18 @@ class Toolkit(ConfigurationBase):
 
         if self.version not in toolkit_def.versions:
             raise InvalidModelError("Toolkit {0} with version {1} is not available. Use one of: {2}".format(
-                self.software, self.version, TOOLKIT_MAP.keys()))
+                self.software, self.version, toolkit_def.versions))
 
         if self.environment:
             if self.environment not in toolkit_def.environments:
-                raise InvalidModelError("Environment {0} for toolkit {1} is not available. Use one of: {3}".format(
+                raise InvalidModelError("Environment {0} for toolkit {1} is not available. Use one of: {2}".format(
                     self.environment, self.software, list(toolkit_def.environments.keys())))
 
             env_def = toolkit_def.environments[self.environment]
 
             if self.environment_version and self.environment_version not in env_def.versions:
                 raise InvalidModelError(
-                    "Environment {0} version {1} for toolkit {2} is not available. Use one of: {4}".format(
+                    "Environment {0} version {1} for toolkit {2} is not available. Use one of: {3}".format(
                         self.environment, self.environment_version, self.software, env_def.versions))
 
 
