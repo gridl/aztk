@@ -2,6 +2,7 @@
 
 # id: <id of the cluster to be created, reccommended to specify with --id command line parameter>
 
+# Toolkit configuration [Required]
 toolkit:
   software: spark
   version: 2.2

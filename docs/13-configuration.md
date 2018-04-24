@@ -11,6 +11,18 @@ This is the default cluster configuration:
 # id: <id of the cluster to be created>
 id: spark_cluster
 
+# Toolkit configuration [Required]
+toolkit:
+  software: spark
+  version: 2.2
+  # environment: python
+  # Optional version for the environment
+  # environment_verion:
+
+  # Optional docker repository(To bring your custom docker image. Just specify the Toolkit software, version and environemnt if using default images)
+  # docker_repo: <name of docker image repo (for more information, see https://github.com/Azure/aztk/blob/master/docs/12-docker-image.md)>
+
+
 # vm_size: <vm-size, see available options here: https://azure.microsoft.com/pricing/details/batch//>
 vm_size: standard_a2
 
@@ -22,8 +34,6 @@ size: 2
 # username: <username for the linux user to be created> (optional)
 username: spark
 
-# docker_repo: <name of docker image repo (for more information, see https://github.com/Azure/aztk/blob/master/docs/12-docker-image.md)>
-docker_repo: aztk/base:spark2.2.0
 
 # custom_script: <path to custom script to run on each node> (optional)
 
@@ -102,7 +112,7 @@ spark.eventLog.dir              <path>
 spark.history.fs.logDirectory   <path>
  ```
 
-Please note that the path for `spark.eventLog.dir` and `spark.history.fs.logDirectory` should most likely match so that the history server reads the logs that each Spark job writes. Also note that while the paths can be local (`file:/`), it is recommended that the paths be accessible by every node in the cluster so that the history server, which runs on the Spark master node, has access to all application logs. HDFS, WASB, ADL, or any other Hadoop API compliant storage system may be used. 
+Please note that the path for `spark.eventLog.dir` and `spark.history.fs.logDirectory` should most likely match so that the history server reads the logs that each Spark job writes. Also note that while the paths can be local (`file:/`), it is recommended that the paths be accessible by every node in the cluster so that the history server, which runs on the Spark master node, has access to all application logs. HDFS, WASB, ADL, or any other Hadoop API compliant storage system may be used.
 
 If using WASB, ADL or other cloud storage services, be sure to set your keys in `.aztk/core-site.xml`. For more information, see the [Cloud Storage](./30-cloud-storage.md) documentation.
 
