@@ -5,6 +5,7 @@ from aztk.utils import constants
 import azure.batch.models as batch_models
 from aztk.models.plugins import PluginConfiguration
 from aztk.internal import ConfigurationBase
+from .toolkit import Toolkit
 import yaml
 import logging
 
@@ -53,9 +54,13 @@ class UserConfiguration(ConfigurationBase):
 class ClusterConfiguration(ConfigurationBase):
     """
     Cluster configuration model
+
+    Args:
+        toolkit
     """
 
     def __init__(self,
+                 toolkit: Toolkit = None,
                  custom_scripts: List[CustomScript] = None,
                  file_shares: List[FileShare] = None,
                  cluster_id: str = None,
@@ -63,10 +68,10 @@ class ClusterConfiguration(ConfigurationBase):
                  vm_low_pri_count=0,
                  vm_size=None,
                  subnet_id=None,
-                 docker_repo: str = None,
                  plugins: List[PluginConfiguration] = None,
                  user_configuration: UserConfiguration = None):
         super().__init__()
+        self.toolkit = toolkit
         self.custom_scripts = custom_scripts
         self.file_shares = file_shares
         self.cluster_id = cluster_id
@@ -74,7 +79,6 @@ class ClusterConfiguration(ConfigurationBase):
         self.vm_size = vm_size
         self.vm_low_pri_count = vm_low_pri_count
         self.subnet_id = subnet_id
-        self.docker_repo = docker_repo
         self.user_configuration = user_configuration
         self.plugins = plugins
 
@@ -85,12 +89,12 @@ class ClusterConfiguration(ConfigurationBase):
         """
 
         self._merge_attributes(other, [
+            "toolkit",
             "custom_scripts",
             "file_shares",
             "cluster_id",
             "vm_size",
             "subnet_id",
-            "docker_repo",
             "vm_count",
             "vm_low_pri_count",
             "plugins",

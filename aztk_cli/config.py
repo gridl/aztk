@@ -10,6 +10,7 @@ from aztk.spark.models import (
     ClusterConfiguration,
     UserConfiguration,
     PluginConfiguration,
+    Toolkit,
 )
 from aztk.models.plugins.internal import PluginReference
 
@@ -186,8 +187,8 @@ def cluster_config_from_dict(config: dict):
                     mount_path=file_share['mount_path'],
                 ))
 
-    if config.get('docker_repo') is not None:
-        output.docker_repo = config['docker_repo']
+    if config.get('toolkit') is not None:
+        output.toolkit = Toolkit.from_dict(config['toolkit'])
 
     if config.get('plugins') not in [[None], None]:
         output.plugins = []

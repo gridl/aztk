@@ -6,6 +6,8 @@ from aztk import error
 from aztk.utils import constants, helpers
 import azure.batch.models as batch_models
 
+class Toolkit(aztk.models.Toolkit):
+    pass
 
 class Cluster(aztk.models.Cluster):
     def __init__(self, pool: batch_models.CloudPool = None, nodes: batch_models.ComputeNodePaged = None):

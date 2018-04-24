@@ -36,12 +36,12 @@ class Toolkit(ConfigurationBase):
         environment (str): Which environment to use for this toolkit
         environment_version (str): If there is multiple version for an environment you can specify which one
     """
-    def __init__(self, name: str, version: str, environment: str = None, environment_version: str = None, gpu = False):
+    def __init__(self, name: str, version: str, environment: str=None, environment_version: str=None, docker_repo=None):
         self.name = name
         self.version = version
         self.environment = environment
         self.environment_version = environment_version
-        self.gpu = gpu
+        self.docker_repo = docker_repo
 
 
     def validate(self):
@@ -70,15 +70,18 @@ class Toolkit(ConfigurationBase):
                         self.environment, self.environment_version, self.name, env_def.versions))
 
 
-    def get_docker_image(self):
+    def get_docker_repo(self, gpu: bool):
+        if self.docker_repo:
+            return self.docker_repo
+
         repo = "aztk/{0}".format(self.name)
 
         return "{repo}:{tag}".format(
             repo=repo,
-            tag=self._get_docker_tag(),
+            tag=self._get_docker_tag(gpu),
         )
 
-    def _get_docker_tag(self):
+    def _get_docker_tag(self, gpu: bool):
         environment = self.environment or "base"
         environment_def = self._get_environent_definition()
         environment_version = self.environment_version or environment_def.default
@@ -90,7 +93,7 @@ class Toolkit(ConfigurationBase):
         if self.environment:
             array.append("{0}{1}".format(environment, environment_version))
 
-        array.append("gpu" if self.gpu else "base")
+        array.append("gpu" if gpu else "base")
 
         return '-'.join(array)
 
