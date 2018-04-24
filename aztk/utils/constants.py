@@ -2,6 +2,7 @@ import os
 """
     DOCKER
 """
+DOCKER_IMAGE_VERSION = "0.1.0"
 DEFAULT_DOCKER_REPO = "aztk/base:latest"
 DEFAULT_DOCKER_REPO_GPU = "aztk/gpu:latest"
 DEFAULT_SPARK_PYTHON_DOCKER_REPO = "aztk/python:latest"
