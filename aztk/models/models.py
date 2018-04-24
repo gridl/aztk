@@ -115,7 +115,7 @@ class ClusterConfiguration(ConfigurationBase):
     def gpu_enabled(self):
         return helpers.is_gpu_enabled(self.vm_size)
 
-    def docker_repo(self):
+    def get_docker_repo(self):
         return self.toolkit.get_docker_repo(self.gpu_enabled())
 
     def validate(self) -> bool:
@@ -123,6 +123,11 @@ class ClusterConfiguration(ConfigurationBase):
         Validate the config at its current state.
         Raises: Error if invalid
         """
+        if self.toolkit is None:
+            raise error.InvalidModelError(
+                "Please supply a toolkit for the cluster")
+
+        self.toolkit.validate()
 
         if self.cluster_id is None:
             raise error.AztkError(

@@ -50,8 +50,7 @@ def execute(args: typing.NamedTuple):
         user_configuration=UserConfiguration(
             username=args.username,
             password=args.password,
-        ),
-        toolkit=args.toolkit))
+        )))
     wait = wait if args.wait is None else args.wait
 
     user_configuration = cluster_conf.user_configuration
