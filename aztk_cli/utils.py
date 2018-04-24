@@ -431,7 +431,7 @@ def print_cluster_conf(cluster_conf: ClusterConfiguration, wait: bool):
     log.info("custom scripts:          %s", len(cluster_conf.custom_scripts) if cluster_conf.custom_scripts else 0)
     log.info("subnet ID:               %s", cluster_conf.subnet_id)
     log.info("file shares:             %s", len(cluster_conf.file_shares) if cluster_conf.file_shares is not None else 0)
-    log.info("docker repo name:        %s", cluster_conf.docker_repo)
+    log.info("docker repo name:        %s", cluster_conf.get_docker_repo())
     log.info("wait for cluster:        %s", wait)
     log.info("username:                %s", user_configuration.username)
     if user_configuration.password:

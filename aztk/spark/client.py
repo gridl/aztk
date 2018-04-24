@@ -32,7 +32,7 @@ class Client(BaseClient):
             start_task = create_cluster_helper.generate_cluster_start_task(self,
                                                                            zip_resource_files,
                                                                            cluster_conf.gpu_enabled(),
-                                                                           cluster_conf.docker_repo,
+                                                                           cluster_conf.get_docker_repo(),
                                                                            cluster_conf.file_shares,
                                                                            cluster_conf.plugins,
                                                                            cluster_conf.mixed_mode(),
@@ -179,7 +179,7 @@ class Client(BaseClient):
             start_task = create_cluster_helper.generate_cluster_start_task(self,
                                                                            zip_resource_files,
                                                                            job_configuration.gpu_enabled,
-                                                                           job_configuration.docker_repo,
+                                                                           job_configuration.get_docker_repo(),
                                                                            mixed_mode=job_configuration.mixed_mode(),
                                                                            worker_on_master=job_configuration.worker_on_master)
 

@@ -51,7 +51,7 @@ def execute(args: typing.NamedTuple):
             username=args.username,
             password=args.password,
         ),
-        docker_repo=args.docker_repo))
+        toolkit=args.toolkit))
     wait = wait if args.wait is None else args.wait
 
     user_configuration = cluster_conf.user_configuration

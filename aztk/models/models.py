@@ -1,13 +1,11 @@
 import io
 from typing import List
-from aztk import error
-from aztk.utils import constants
 import azure.batch.models as batch_models
+from aztk import error
+from aztk.utils import helpers
 from aztk.models.plugins import PluginConfiguration
 from aztk.internal import ConfigurationBase
 from .toolkit import Toolkit
-import yaml
-import logging
 
 
 class FileShare:
@@ -112,6 +110,13 @@ class ClusterConfiguration(ConfigurationBase):
 
     def mixed_mode(self) -> bool:
         return self.vm_count > 0 and self.vm_low_pri_count > 0
+
+
+    def gpu_enabled(self):
+        return helpers.is_gpu_enabled(self.vm_size)
+
+    def docker_repo(self):
+        return self.toolkit.get_docker_repo(self.gpu_enabled())
 
     def validate(self) -> bool:
         """
