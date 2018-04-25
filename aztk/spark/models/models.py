@@ -1,13 +1,18 @@
-import io
-from Crypto.PublicKey import RSA
 from typing import List
+from Crypto.PublicKey import RSA
+import azure.batch.models as batch_models
 import aztk.models
 from aztk import error
 from aztk.utils import constants, helpers
-import azure.batch.models as batch_models
 
-class Toolkit(aztk.models.Toolkit):
-    pass
+class SparkToolkit(aztk.models.Toolkit):
+    def __init__(self, version: str, environment: str = None, environment_version: str = None):
+        super().__init__(
+            version=version,
+            environment=environment,
+            environment_version=environment_version,
+        )
+
 
 class Cluster(aztk.models.Cluster):
     def __init__(self, pool: batch_models.CloudPool = None, nodes: batch_models.ComputeNodePaged = None):
@@ -99,7 +104,7 @@ class ClusterConfiguration(aztk.models.ClusterConfiguration):
             vm_low_pri_count=0,
             vm_size=None,
             subnet_id=None,
-            toolkit: Toolkit = None,
+            toolkit: SparkToolkit = None,
             user_configuration: UserConfiguration = None,
             spark_configuration: SparkConfiguration = None,
             worker_on_master: bool = None):

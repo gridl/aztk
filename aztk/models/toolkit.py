@@ -36,7 +36,13 @@ class Toolkit(ConfigurationBase):
         environment (str): Which environment to use for this toolkit
         environment_version (str): If there is multiple version for an environment you can specify which one
     """
-    def __init__(self, software: str, version: str, environment: str=None, environment_version: str=None, docker_repo=None):
+    def __init__(self,
+                 software: str,
+                 version: str,
+                 environment: str = None,
+                 environment_version: str = None,
+                 docker_repo=None):
+
         self.software = software
         self.version = str(version)
         self.environment = environment

@@ -26,7 +26,7 @@ class File:
 
 
 class CustomScript:
-    def __init__(self, name: str = None, script = None, run_on=None):
+    def __init__(self, name: str = None, script=None, run_on=None):
         self.name = name
         self.script = script
         self.run_on = run_on
@@ -47,6 +47,9 @@ class UserConfiguration(ConfigurationBase):
             "ssh_key",
             "password",
         ])
+
+    def validate(self):
+        pass
 
 
 class ClusterConfiguration(ConfigurationBase):
