@@ -54,7 +54,7 @@ Jobs also require a definition of the cluster on which the Applications will run
       - custom
       - scripts
 ```
-_Please Note: For more information about Azure VM sizes, see [Azure Batch Pricing](https://azure.microsoft.com/en-us/pricing/details/batch/). And for more information about Docker repositories see [Docker](./12-docker-iamge.md)._
+_Please Note: For more information about Azure VM sizes, see [Azure Batch Pricing](https://azure.microsoft.com/en-us/pricing/details/batch/). And for more information about Docker repositories see [Docker](./12-docker-iamge.html)._
 
 _The only required fields are vm_size and either size or size_low_pri, all other fields can be left blank or removed._
 
