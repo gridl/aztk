@@ -9,9 +9,8 @@ from aztk.spark.models import (
     DockerConfiguration,
     ClusterConfiguration,
     UserConfiguration,
-    PluginConfiguration,
-    Toolkit,
 )
+from aztk.models import Toolkit
 from aztk.models.plugins.internal import PluginReference
 
 def load_aztk_secrets() -> SecretsConfiguration:
@@ -128,7 +127,7 @@ def read_cluster_config(
         Reads the config file in the .aztk/ directory (.aztk/cluster.yaml)
     """
     if not os.path.isfile(path):
-        return
+        return None
 
     with open(path, 'r', encoding='UTF-8') as stream:
         try:
@@ -138,7 +137,7 @@ def read_cluster_config(
                 "Error in cluster.yaml: {0}".format(err))
 
         if config_dict is None:
-            return
+            return None
 
         return cluster_config_from_dict(config_dict)
 
