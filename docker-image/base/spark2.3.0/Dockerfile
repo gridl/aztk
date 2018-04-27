@@ -8,7 +8,7 @@ ENV AZTK_VERSION_COMPATIBILITY 0.1.0
 ENV AZTK_PYTHON_VERSION=3.5.2
 
 # modify these ARGs on build time to specify your desired versions of Spark/Hadoop
-ENV SPARK_VERSION_KEY 2.1.0
+ENV SPARK_VERSION_KEY 2.3.0
 ENV SPARK_FULL_VERSION spark-${SPARK_VERSION_KEY}-bin-without-hadoop
 ENV HADOOP_VERSION 2.8.3
 ENV HADOOP_PREFIX=/opt/hadoop-$HADOOP_VERSION
@@ -115,7 +115,7 @@ RUN apt-get clean \
                     '</dependency>' \
                     '<dependency>' \
                         '<groupId>com.microsoft.azure</groupId>' \
-                        '<artifactId>azure-cosmosdb-spark_${SPARK_VERSION_KEY}_2.11</artifactId>' \
+                        '<artifactId>azure-cosmosdb-spark_2.2.0_2.11</artifactId>' \
                         '<version>1.1.1</version>' \
                         '<exclusions>' \
                             '<exclusion>' \
