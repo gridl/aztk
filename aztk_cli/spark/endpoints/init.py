@@ -2,7 +2,7 @@ import argparse
 import os
 import typing
 from distutils.dir_util import copy_tree
-
+from aztk_cli import log
 import aztk.utils.constants as constants
 
 
@@ -10,7 +10,8 @@ def setup_parser(parser: argparse.ArgumentParser):
     parser.add_argument('--global', dest='global_flag', action='store_true',
                         help="Create a .aztk/ folder in your home directory for global configurations.")
     software_parser = parser.add_mutually_exclusive_group()
-    software_parser.add_argument('--python', action="store_true", required=False)
+    software_parser.add_argument('--miniconda', action="store_true", required=False)
+    software_parser.add_argument('--annaconda', action="store_true", required=False)
     software_parser.add_argument('--r', '--R', action="store_true", required=False)
     software_parser.add_argument('--java', action="store_true", required=False)
     software_parser.add_argument('--scala', action="store_true", required=False)
@@ -18,8 +19,10 @@ def setup_parser(parser: argparse.ArgumentParser):
 
 def execute(args: typing.NamedTuple):
     # software_specific init
-    if args.python:
+    if args.miniconda:
         environment = "miniconda"
+    elif args.annaconda:
+        environment = "annaconda"
     elif args.r:
         environment = "r"
     else:
@@ -34,6 +37,10 @@ def execute(args: typing.NamedTuple):
 def create_directory(dest_path: str, environment: str):
     config_src_path = constants.INIT_DIRECTORY_SOURCE
     config_dest_path = dest_path
+
+    if os.path.isdir(config_dest_path):
+        log.warning("This directory has already been initialized.")
+        return
 
     copy_tree(config_src_path, config_dest_path, update=1)
 
