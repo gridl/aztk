@@ -48,8 +48,6 @@ def _get_deprecated_version():
     """
     Returns the next version where the deprecated funtionality will be removed
     """
-
     if version.major == 0:
         return "0.{minor}.0".format(minor=version.minor + 1)
-    else:
-        return "{major}.0.0".format(major=version.major + 1)
+    return "{major}.0.0".format(major=version.major + 1)
