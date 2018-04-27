@@ -2,7 +2,7 @@ import io
 from typing import List
 import azure.batch.models as batch_models
 from aztk import error
-from aztk.utils import helpers
+from aztk.utils import helpers, deprecate
 from aztk.models.plugins import PluginConfiguration
 from aztk.internal import ConfigurationBase
 from .toolkit import Toolkit
@@ -152,7 +152,7 @@ class ClusterConfiguration(ConfigurationBase):
             )
 
         if self.custom_scripts:
-            logging.warning("Custom scripts are DEPRECATED and will be removed in 0.8.0. Use plugins instead See https://aztk.readthedocs.io/en/latest/15-plugins.html")
+            deprecate("Custom scripts are DEPRECATED and will be removed in 0.8.0. Use plugins instead See https://aztk.readthedocs.io/en/latest/15-plugins.html")
 
 
 class RemoteLogin:
