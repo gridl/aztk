@@ -1,7 +1,7 @@
 import warnings
 import functools
 import inspect
-
+import aztk.version as version
 
 def deprecated(reason: str = None):
     """
@@ -35,8 +35,21 @@ def deprecate(message: str):
     Args:
         message (str): Message to print
     """
+
+    deprecated_version = _get_deprecated_version()
     warnings.simplefilter('always', DeprecationWarning)  # turn off filter
-    warnings.warn(message,
+    warnings.warn("{0} It will be removed in Aztk version {1}".format(message, deprecated_version),
                   category=DeprecationWarning,
                   stacklevel=2)
     warnings.simplefilter('default', DeprecationWarning)  # reset filter
+
+
+def _get_deprecated_version():
+    """
+    Returns the next version where the deprecated funtionality will be removed
+    """
+
+    if version.major == 0:
+        return "0.{minor}.0".format(minor=version.minor + 1)
+    else:
+        return "{major}.0.0".format(major=version.major + 1)
