@@ -5,12 +5,20 @@
     pip install -e .
 """
 import argparse
+import warnings
 from typing import NamedTuple
 import azure.batch.models.batch_error as batch_error
 import aztk
 from aztk_cli import logger, log, utils, constants
 from aztk_cli.spark.endpoints import spark
 from . import plugins
+
+
+# Makes sure the warnings are displayed nicely in the CLI without a stacktrace
+def _show_warn(message, *_args):
+    log.warning(message)
+
+warnings.showwarning = _show_warn
 
 def main():
     parser = argparse.ArgumentParser(prog=constants.CLI_EXE)
