@@ -19,19 +19,19 @@ def setup_parser(parser: argparse.ArgumentParser):
 def execute(args: typing.NamedTuple):
     # software_specific init
     if args.python:
-        docker_repo = constants.DEFAULT_SPARK_PYTHON_DOCKER_REPO
+        environment = "miniconda"
     elif args.r:
-        docker_repo = constants.DEFAULT_SPARK_R_BASE_DOCKER_REPO
+        environment = "r"
     else:
-        docker_repo = constants.DEFAULT_DOCKER_REPO
+        environment = ""
 
     if args.global_flag:
-        create_directory(constants.GLOBAL_INIT_DIRECTORY_DEST, docker_repo)
+        create_directory(constants.GLOBAL_INIT_DIRECTORY_DEST, environment)
     else:
-        create_directory(constants.LOCAL_INIT_DIRECTORY_DEST, docker_repo)
+        create_directory(constants.LOCAL_INIT_DIRECTORY_DEST, environment)
 
 
-def create_directory(dest_path: str, docker_repo: str):
+def create_directory(dest_path: str, environment: str):
     config_src_path = constants.INIT_DIRECTORY_SOURCE
     config_dest_path = dest_path
 
@@ -51,6 +51,6 @@ def create_directory(dest_path: str, docker_repo: str):
     if os.path.isfile(cluster_path):
         with open(cluster_path, 'r', encoding='UTF-8') as stream:
             cluster_yaml = stream.read()
-        cluster_yaml = cluster_yaml.replace("docker_repo: \n", "docker_repo: {}\n".format(docker_repo))
+        cluster_yaml = cluster_yaml.replace("{environment}", "{}\n".format(environment))
         with open(cluster_path, 'w', encoding='UTF-8') as file:
             file.write(cluster_yaml)
