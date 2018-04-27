@@ -54,25 +54,25 @@ class Toolkit(ConfigurationBase):
         self._validate_required(["software", "version"])
 
         if self.software not in TOOLKIT_MAP:
-            raise InvalidModelError("Toolkit {0} is not in the list of allowed toolkits {1}".format(
+            raise InvalidModelError("Toolkit '{0}' is not in the list of allowed toolkits {1}".format(
                 self.software, list(TOOLKIT_MAP.keys())))
 
         toolkit_def = TOOLKIT_MAP[self.software]
 
         if self.version not in toolkit_def.versions:
-            raise InvalidModelError("Toolkit {0} with version {1} is not available. Use one of: {2}".format(
+            raise InvalidModelError("Toolkit '{0}' with version '{1}' is not available. Use one of: {2}".format(
                 self.software, self.version, toolkit_def.versions))
 
         if self.environment:
             if self.environment not in toolkit_def.environments:
-                raise InvalidModelError("Environment {0} for toolkit {1} is not available. Use one of: {2}".format(
+                raise InvalidModelError("Environment '{0}' for toolkit '{1}' is not available. Use one of: {2}".format(
                     self.environment, self.software, list(toolkit_def.environments.keys())))
 
             env_def = toolkit_def.environments[self.environment]
 
             if self.environment_version and self.environment_version not in env_def.versions:
                 raise InvalidModelError(
-                    "Environment {0} version {1} for toolkit {2} is not available. Use one of: {3}".format(
+                    "Environment '{0}' version '{1}' for toolkit '{2}' is not available. Use one of: {3}".format(
                         self.environment, self.environment_version, self.software, env_def.versions))
 
 
