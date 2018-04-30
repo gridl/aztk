@@ -120,11 +120,11 @@ class ClusterConfiguration(aztk.models.ClusterConfiguration):
             user_configuration=user_configuration,
         )
         self.spark_configuration = spark_configuration
-        self.worker_on_master = True if worker_on_master is None else False
+        self.worker_on_master = worker_on_master
 
     def merge(self, other):
         super().merge(other)
-        self._merge_attributes(other, ["worker_on_master"])
+        self._merge_attributes(other, ["spark_configuration", "worker_on_master"])
 
 
 class SecretsConfiguration(aztk.models.SecretsConfiguration):
