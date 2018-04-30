@@ -5,7 +5,7 @@
 # Toolkit configuration [Required]
 toolkit:
   software: spark
-  version: 2.2
+  version: 2.2.0
   # Which environemnt is needed for spark anaconda, r, miniconda
   environment: {environment}
   # Optional version for the environment
