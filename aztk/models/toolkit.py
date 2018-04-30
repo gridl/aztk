@@ -108,8 +108,8 @@ class Toolkit(ConfigurationBase):
 
 
     def _get_environent_definition(self) -> ToolkitEnvironmentDefinition:
-        toolkit =  TOOLKIT_MAP.get(self.software)
+        toolkit = TOOLKIT_MAP.get(self.software)
 
         if toolkit:
             return toolkit.environments.get(self.environment or "base")
-
+        return None
