@@ -107,7 +107,7 @@ class Client:
             auto_scale_evaluation_interval=timedelta(minutes=5),
             start_task=start_task,
             enable_inter_node_communication=True if not cluster_conf.subnet_id else False,
-            max_tasks_per_node=1,
+            max_tasks_per_node=4,
             network_configuration=network_conf,
             metadata=[
                 batch_models.MetadataItem(

@@ -99,6 +99,7 @@ def __app_submit_cmd(
     spark_submit_cmd.add_option(
         '--master', 'spark://{0}:7077'.format(master_ip))
     spark_submit_cmd.add_option('--name', name)
+    # spark_submit_cmd.add_option('--deploy-mode', 'client')
     spark_submit_cmd.add_option('--class', main_class)
     spark_submit_cmd.add_option('--jars', jars and ','.join(jars))
     spark_submit_cmd.add_option('--py-files', py_files and ','.join(py_files))
