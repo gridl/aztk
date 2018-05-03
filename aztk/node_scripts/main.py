@@ -1,6 +1,8 @@
 import sys
-import aztk.spark
 from install import install
+from core import logger
+
+logger.setup_logging()
 
 def run():
     if len(sys.argv) < 2:

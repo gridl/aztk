@@ -16,6 +16,7 @@ from aztk.internal.cluster_data import NodeData
 
 DEFAULT_CLUSTER_CONFIG = models.ClusterConfiguration(
     worker_on_master=True,
+    scheduling_target=models.SchedulingTarget.Dedicated,
 )
 
 class Client(BaseClient):

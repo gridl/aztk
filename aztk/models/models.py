@@ -6,7 +6,7 @@ from aztk.utils import helpers, deprecate
 from aztk.models.plugins import PluginConfiguration
 from aztk.internal import ConfigurationBase
 from .toolkit import Toolkit
-
+from .scheduling_target import SchedulingTarget
 
 class FileShare:
     def __init__(self,
@@ -69,6 +69,7 @@ class ClusterConfiguration(ConfigurationBase):
                  vm_low_pri_count=0,
                  vm_size=None,
                  subnet_id=None,
+                 scheduling_target=SchedulingTarget,
                  plugins: List[PluginConfiguration] = None,
                  user_configuration: UserConfiguration = None):
         super().__init__()
@@ -81,6 +82,7 @@ class ClusterConfiguration(ConfigurationBase):
         self.vm_low_pri_count = vm_low_pri_count
         self.subnet_id = subnet_id
         self.user_configuration = user_configuration
+        self.scheduling_target = scheduling_target
         self.plugins = plugins
 
     def merge(self, other):
