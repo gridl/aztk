@@ -94,8 +94,7 @@ class PluginConfiguration(aztk.models.PluginConfiguration):
     pass
 
 
-class SchedulingTarget(aztk.models.SchedulingTarget):
-    pass
+SchedulingTarget = aztk.models.SchedulingTarget
 
 class ClusterConfiguration(aztk.models.ClusterConfiguration):
     def __init__(
