@@ -94,6 +94,9 @@ class PluginConfiguration(aztk.models.PluginConfiguration):
     pass
 
 
+class SchedulingTarget(aztk.models.SchedulingTarget):
+    pass
+
 class ClusterConfiguration(aztk.models.ClusterConfiguration):
     def __init__(
             self,
@@ -128,9 +131,6 @@ class ClusterConfiguration(aztk.models.ClusterConfiguration):
         super().merge(other)
         self._merge_attributes(other, ["spark_configuration", "worker_on_master"])
 
-
-class SchedulingTarget(aztk.models.SchedulingTarget):
-    pass
 
 class SecretsConfiguration(aztk.models.SecretsConfiguration):
     pass
