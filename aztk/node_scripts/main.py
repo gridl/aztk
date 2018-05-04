@@ -2,7 +2,7 @@ import sys
 from install import install
 from core import logger
 
-logger.setup_logging()
+
 
 def run():
     if len(sys.argv) < 2:
@@ -20,4 +20,5 @@ def run():
 
 
 if __name__ == "__main__":
+    logger.setup_logging()
     run()

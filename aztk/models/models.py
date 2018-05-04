@@ -101,6 +101,7 @@ class ClusterConfiguration(ConfigurationBase):
             "vm_count",
             "vm_low_pri_count",
             "plugins",
+            "scheduling_target",
         ])
 
         if other.user_configuration:
