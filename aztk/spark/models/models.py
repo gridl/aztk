@@ -4,6 +4,7 @@ import azure.batch.models as batch_models
 import aztk.models
 from aztk import error
 from aztk.utils import constants, helpers
+from aztk.internal import ConfigurationBase
 
 class SparkToolkit(aztk.models.Toolkit):
     def __init__(self, version: str, environment: str = None, environment_version: str = None):
@@ -206,7 +207,7 @@ class Application:
         self._e_tag = cloud_task.e_tag
 
 
-class JobConfiguration:
+class JobConfiguration(ConfigurationBase):
     def __init__(
             self,
             id = None,
@@ -220,6 +221,8 @@ class JobConfiguration:
             subnet_id=None,
             scheduling_target: SchedulingTarget = None,
             worker_on_master=None):
+        super().__init__()
+
         self.id = id
         self.applications = applications
         self.custom_scripts = custom_scripts
