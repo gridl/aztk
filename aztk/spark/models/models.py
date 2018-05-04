@@ -295,17 +295,17 @@ class JobConfiguration(ConfigurationBase):
 
         self._merge_attributes(other, [
             "id",
-            "applications"
-            "custom_scripts"
-            "spark_configuration"
-            "vm_size"
-            "gpu_enabled"
-            "toolkit"
-            "max_dedicated_nodes"
-            "max_low_pri_nodes"
-            "subnet_id"
-            "worker_on_master"
-            "scheduling_target"
+            "applications",
+            "custom_scripts",
+            "spark_configuration",
+            "vm_size",
+            "gpu_enabled",
+            "toolkit",
+            "max_dedicated_nodes",
+            "max_low_pri_nodes",
+            "subnet_id",
+            "worker_on_master",
+            "scheduling_target",
         ])
 
 class JobState():
