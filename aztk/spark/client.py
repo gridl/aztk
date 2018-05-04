@@ -19,6 +19,12 @@ DEFAULT_CLUSTER_CONFIG = models.ClusterConfiguration(
     scheduling_target=models.SchedulingTarget.Dedicated,
 )
 
+
+DEFAULT_JOB_CONFIG = models.JobConfiguration(
+    worker_on_master=True,
+    scheduling_target=models.SchedulingTarget.Dedicated,
+)
+
 class Client(BaseClient):
     """
     Aztk Spark Client
@@ -208,8 +214,11 @@ class Client(BaseClient):
     '''
         job submission
     '''
-    def submit_job(self, job_configuration):
+    def submit_job(self, configuration: models.JobConfiguration):
         try:
+            job_configuration = models.ClusterConfiguration()
+            job_configuration.merge(DEFAULT_JOB_CONFIG)
+            job_configuration.merge(configuration)
             job_configuration.validate()
             cluster_data = self._get_cluster_data(job_configuration.id)
             node_data =  NodeData(job_configuration.to_cluster_config()).add_core().done()
