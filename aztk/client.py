@@ -105,9 +105,6 @@ class Client:
             start_task=start_task,
             enable_inter_node_communication=True if not cluster_conf.subnet_id else False,
             max_tasks_per_node=4,
-            task_scheduling_policy=batch_models.TaskSchedulingPolicy(
-                node_fill_type=batch_models.ComputeNodeFillType.pack,
-            ),
             network_configuration=network_conf,
             metadata=[
                 batch_models.MetadataItem(
@@ -323,9 +320,6 @@ class Client:
                 enable_inter_node_communication=not job_configuration.mixed_mode(),
                 network_configuration=network_conf,
                 max_tasks_per_node=4,
-                task_scheduling_policy=batch_models.TaskSchedulingPolicy(
-                    node_fill_type=batch_models.ComputeNodeFillType.pack,
-                ),
                 metadata=[
                     batch_models.MetadataItem(
                         name=constants.AZTK_SOFTWARE_METADATA_KEY, value=software_metadata_key),
