@@ -225,7 +225,9 @@ class JobConfiguration:
         self.custom_scripts = custom_scripts
         self.spark_configuration = spark_configuration
         self.vm_size = vm_size
-        self.gpu_enabled = helpers.is_gpu_enabled(vm_size)
+        self.gpu_enabled = None
+        if vm_size:
+            self.gpu_enabled = helpers.is_gpu_enabled(vm_size)
         self.toolkit = toolkit
         self.max_dedicated_nodes = max_dedicated_nodes
         self.max_low_pri_nodes = max_low_pri_nodes
@@ -282,6 +284,26 @@ class JobConfiguration:
                 "You must configure a VNET to use AZTK in mixed mode (dedicated and low priority nodes) and pass the subnet_id in your configuration.."
             )
 
+    def merge(self, other):
+        """
+        Merge other cluster config into this one.
+        :params other: ClusterConfiguration
+        """
+
+        self._merge_attributes(other, [
+            "id",
+            "applications"
+            "custom_scripts"
+            "spark_configuration"
+            "vm_size"
+            "gpu_enabled"
+            "toolkit"
+            "max_dedicated_nodes"
+            "max_low_pri_nodes"
+            "subnet_id"
+            "worker_on_master"
+            "scheduling_target"
+        ])
 
 class JobState():
     complete = 'completed'

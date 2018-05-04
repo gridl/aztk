@@ -1,10 +1,9 @@
 import argparse
-import time
 import typing
 
 import aztk.spark
-from aztk_cli import config, log, utils
-from aztk_cli.config import JobConfig, load_aztk_spark_config
+from aztk_cli import config
+from aztk_cli.config import JobConfig
 
 
 def setup_parser(parser: argparse.ArgumentParser):

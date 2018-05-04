@@ -216,7 +216,7 @@ class Client(BaseClient):
     '''
     def submit_job(self, configuration: models.JobConfiguration):
         try:
-            job_configuration = models.ClusterConfiguration()
+            job_configuration = models.JobConfiguration()
             job_configuration.merge(DEFAULT_JOB_CONFIG)
             job_configuration.merge(configuration)
             job_configuration.validate()
