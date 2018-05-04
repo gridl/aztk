@@ -6,6 +6,8 @@ log = logging.getLogger("aztk.node-agent")
 DEFAULT_FORMAT = '%(message)s'
 
 def setup_logging():
-    print("Setup logger")
+    for handler in logging.root.handlers[:]:
+        logging.root.removeHandler(handler)
+
     log.setLevel(logging.INFO)
-    logging.basicConfig(stream=sys.stdout,format=DEFAULT_FORMAT)
+    logging.basicConfig(stream=sys.stdout, format=DEFAULT_FORMAT)

@@ -28,7 +28,7 @@ storage_resource_id = os.environ.get("SP_STORAGE_RESOURCE_ID")
 cluster_id = os.environ.get("AZTK_CLUSTER_ID")
 pool_id = os.environ["AZ_BATCH_POOL_ID"]
 node_id = os.environ["AZ_BATCH_NODE_ID"]
-is_dedicated = os.environ["AZ_BATCH_NODE_IS_DEDICATED"]
+is_dedicated = os.environ.get("AZ_BATCH_NODE_IS_DEDICATED") == "true"
 
 spark_web_ui_port = os.environ["SPARK_WEB_UI_PORT"]
 spark_worker_ui_port = os.environ["SPARK_WORKER_UI_PORT"]
