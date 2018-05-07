@@ -49,8 +49,6 @@ def setup_node_scheduling(
         enable = True
     elif cluster_config.scheduling_target == SchedulingTarget.Master and is_master:
         enable = True
-    elif cluster_config.scheduling_target == SchedulingTarget.NonMasterDedicated and not is_master and is_dedicated:
-        enable = True
 
     if enable:
         log.info("Scheduling will be enabled on this node as it satifies the right conditions")

@@ -16,13 +16,7 @@ class SchedulingTarget(Enum):
     Any dedicated node is allowed to run task(Default)
     """
 
-    NonMasterDedicated = "non_master_dedicated"
-    """
-    Any dedicated node that is not the master
-    """
-
-    Any  = "any"
+    Any = "any"
     """
     Any node(Not reconmmended if using low pri)
     """
-
