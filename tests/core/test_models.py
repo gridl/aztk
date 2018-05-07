@@ -66,8 +66,8 @@ def test_convert_nested_dict_to_model():
             name="Highlander",
             age=800,
         ),
-        enabled = False,
-        state = "deleting",
+        enabled=False,
+        state="deleting",
     )
     assert isinstance(user.info, UserInfo)
     assert user.info.name == "Highlander"
@@ -82,4 +82,31 @@ def test_raise_error_if_missing_required_field():
     missing = SimpleRequiredModel()
 
     with pytest.raises(InvalidModelFieldError, match="SimpleRequiredModel name is required"):
+        missing.validate()
+
+def test_raise_error_if_string_field_invalid_type():
+    class SimpleStringModel(Model):
+        name = fields.String()
+
+    missing = SimpleStringModel(name=123)
+
+    with pytest.raises(InvalidModelFieldError, match="SimpleStringModel name 123 should be a string"):
+        missing.validate()
+
+def test_raise_error_if_int_field_invalid_type():
+    class SimpleIntegerModel(Model):
+        age = fields.Integer()
+
+    missing = SimpleIntegerModel(age='123')
+
+    with pytest.raises(InvalidModelFieldError, match="SimpleIntegerModel age 123 should be an integer"):
+        missing.validate()
+
+def test_raise_error_if_bool_field_invalid_type():
+    class SimpleBoolModel(Model):
+        enabled = fields.Boolean()
+
+    missing = SimpleBoolModel(enabled="false")
+
+    with pytest.raises(InvalidModelFieldError, match="SimpleBoolModel enabled false should be a boolean"):
         missing.validate()

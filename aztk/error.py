@@ -17,7 +17,7 @@ class InvalidPluginConfigurationError(AztkError):
     pass
 
 class InvalidModelError(AztkError):
-    def __init__(self, message: str, model = None):
+    def __init__(self, message: str, model=None):
         super().__init__()
         self.message = message
         self.model = model
@@ -37,7 +37,7 @@ class InvalidPluginReferenceError(InvalidModelError):
     pass
 
 class InvalidModelFieldError(InvalidModelError):
-    def __init__(self, message: str, model = None, field = None):
+    def __init__(self, message: str, model=None, field=None):
         super().__init__(message, model)
         self.field = field
 

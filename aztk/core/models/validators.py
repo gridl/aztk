@@ -34,7 +34,7 @@ class String(Validator):
 
     def validate(self, value):
         if not isinstance(value, str):
-            raise InvalidModelFieldError('should be a string')
+            raise InvalidModelFieldError('{0} should be a string'.format(value))
 
 
 class Integer(Validator):
@@ -44,7 +44,7 @@ class Integer(Validator):
 
     def validate(self, value):
         if not isinstance(value, int):
-            raise InvalidModelFieldError('should be an integer')
+            raise InvalidModelFieldError('{0} should be an integer'.format(value))
 
 
 class Float(Validator):
@@ -54,7 +54,7 @@ class Float(Validator):
 
     def validate(self, value):
         if not isinstance(value, float):
-            raise InvalidModelFieldError('should be a float')
+            raise InvalidModelFieldError('{0} should be a float'.format(value))
 
 
 class Boolean(Validator):
@@ -62,7 +62,7 @@ class Boolean(Validator):
 
     def validate(self, value):
         if not isinstance(value, bool):
-            raise InvalidModelFieldError('should be a boolean')
+            raise InvalidModelFieldError('{0} should be a boolean'.format(value))
 
 
 
@@ -76,7 +76,7 @@ class In(Validator):
 
     def validate(self, value):
         if value not in self.choices:
-            raise InvalidModelFieldError('should be in {}'.format(self.choices))
+            raise InvalidModelFieldError('{0} should be in {1}'.format(value, self.choices))
 
 class InstanceOf(Validator):
     """
