@@ -16,7 +16,7 @@ class UserInfo(Model):
     age = fields.Integer()
 
 class User(Model):
-    info = fields.Nested(UserInfo)
+    info = fields.Model(UserInfo)
     enabled = fields.Boolean(default=True)
     state = fields.Enum(UserState, default=UserState.Ready)
 
@@ -34,8 +34,6 @@ def test_models():
     assert user.info.age == 800
     assert user.enabled is False
     assert user.state == UserState.Creating
-
-
 
 def test_enum_invalid_type_raise_error():
     class SimpleStateModel(Model):

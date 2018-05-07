@@ -109,7 +109,7 @@ class List(Field):
             *args, **kwargs)
 
 
-class Nested(Field):
+class Model(Field):
     """
     Field is another model
     """
