@@ -8,6 +8,7 @@ from aztk.internal import ConfigurationBase
 from .toolkit import Toolkit
 from .scheduling_target import SchedulingTarget
 
+
 class FileShare:
     def __init__(self,
                  storage_account_name: str = None,
