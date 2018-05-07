@@ -1,4 +1,4 @@
-from aztk.error import InvalidModelError, InvalidModelFieldError
+from aztk.error import InvalidModelError, InvalidModelFieldError, AztkError
 
 from aztk.core.models import fields
 
@@ -34,6 +34,7 @@ class Model(metaclass=ModelMeta):
     def __new__(cls, *_args, **_kwargs):
         model = super().__new__(cls)
         model._data = {}
+        model._defaults = {}
         return model
 
     def __init__(self, **kwargs):
@@ -70,6 +71,17 @@ class Model(metaclass=ModelMeta):
 
         if hasattr(self, '__validate__'):
             self.__validate__()
+
+
+    def merge(self, other):
+        if not isinstance(other, self.__class__):
+            raise AztkError("Cannot merge {0} as is it not an instance of {1}".format(other, self.__class__.__name__))
+
+        for name, field in other._fields.items():
+            if field in other._data:
+                self[name] = other._data[field]
+
+        return self
 
     def _update(self, values):
         for k, v in values.items():

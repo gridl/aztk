@@ -37,7 +37,7 @@ class Field:
             try:
                 return instance._data[self]
             except KeyError:
-                return instance._data.setdefault(self, self._default(instance))
+                return instance._defaults.setdefault(self, self._default(instance))
 
         return self
 

@@ -20,6 +20,7 @@ class User(Model):
     enabled = fields.Boolean(default=True)
     state = fields.Enum(UserState, default=UserState.Ready)
 
+
 def test_models():
     user = User(
         info=UserInfo(
@@ -34,6 +35,10 @@ def test_models():
     assert user.info.age == 800
     assert user.enabled is False
     assert user.state == UserState.Creating
+
+def test_raise_error_if_extra_parameters():
+    # TODO
+    pass
 
 def test_enum_invalid_type_raise_error():
     class SimpleStateModel(Model):
@@ -108,3 +113,18 @@ def test_raise_error_if_bool_field_invalid_type():
 
     with pytest.raises(InvalidModelFieldError, match="SimpleBoolModel enabled false should be a boolean"):
         missing.validate()
+
+def test_merge_with_default_value():
+    class SimpleMergeModel(Model):
+        name = fields.String()
+        enabled = fields.Boolean(default=True)
+
+    record1 = SimpleMergeModel(enabled=False)
+    assert record1.enabled is False
+
+    record2 = SimpleMergeModel(name="foo")
+    assert record2.enabled is True
+
+    record1.merge(record2)
+    assert record1.name == 'foo'
+    assert record1.enabled is False
