@@ -42,13 +42,13 @@ class Model(metaclass=ModelMeta):
 
     def __getitem__(self, k):
         if k not in self._fields:
-            raise AttributeError(k)
+            raise AttributeError("{0} doesn't have an attribute called {1}".format(self.__class__.__name__, k))
 
         return getattr(self, k)
 
     def __setitem__(self, k, v):
         if k not in self._fields:
-            raise AttributeError(k)
+            raise AttributeError("{0} doesn't have an attribute called {1}".format(self.__class__.__name__, k))
         try:
             setattr(self, k, v)
         except InvalidModelFieldError as e:

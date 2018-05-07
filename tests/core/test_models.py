@@ -37,8 +37,11 @@ def test_models():
     assert user.state == UserState.Creating
 
 def test_raise_error_if_extra_parameters():
-    # TODO
-    pass
+    class SimpleNameModel(Model):
+        name = fields.String()
+
+    with pytest.raises(AttributeError, match="SimpleNameModel doesn't have an attribute called abc"):
+        SimpleNameModel(name="foo", abc="123")
 
 def test_enum_invalid_type_raise_error():
     class SimpleStateModel(Model):

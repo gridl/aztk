@@ -123,4 +123,3 @@ class List(Validator):
         for i in value:
             for validator in self.validators:
                 validator(i)
-
