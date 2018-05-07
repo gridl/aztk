@@ -57,7 +57,7 @@ def test_enum_parse_string():
 
 
 
-def convert_nested_dict_to_model():
+def test_convert_nested_dict_to_model():
     user = User(
         info=dict(
             name="Highlander",
@@ -71,3 +71,12 @@ def convert_nested_dict_to_model():
     assert user.info.age == 800
     assert user.enabled is False
     assert user.state == UserState.Creating
+
+def test_raise_error_if_missing_required_field():
+    class SimpleRequiredModel():
+        name = fields.String()
+
+    missing = SimpleRequiredModel()
+
+    with pytest.raises(InvalidModelFieldError, match=""):
+        missing.validate()
