@@ -41,4 +41,5 @@ class InvalidModelFieldError(InvalidModelError):
         self.field = field
 
     def __str__(self):
-        return "{model} {field} {message}".format(model=self.model, field=self.field, message=self.message)
+        model_name = self.model and self.model.__class__.__name__
+        return "{model} {field} {message}".format(model=model_name, field=self.field, message=self.message)

@@ -1,3 +1,5 @@
+from aztk.error import InvalidModelFieldError
+
 from . import validators as aztk_validators
 
 # pylint: disable=W0212
@@ -18,6 +20,12 @@ class Field:
     def validate(self, value):
         for validator in self.validators:
             validator(value)
+
+    def decode(self, value):
+        if hasattr(self, "__decode__"):
+            value = self.__decode__(value)
+
+        return value
 
     def __get__(self, instance, owner):
         if instance is not None:
@@ -96,7 +104,6 @@ class List(Field):
             *args, **kwargs)
 
 
-
 class Nested(Field):
     """
     Field is another model
@@ -106,3 +113,27 @@ class Nested(Field):
         super().__init__(aztk_validators.Model(model), *args, **kwargs)
 
         self.model = model
+
+
+class Enum(Field):
+    """
+    Field that should be an enum
+    """
+    def __init__(self, model, *args, **kwargs):
+        super().__init__(aztk_validators.InstanceOf(model), *args, **kwargs)
+
+        self.model = model
+
+
+    def __decode__(self, value: str):
+        return self.model(value)
+
+    def __set__(self, instance, value):
+        if not isinstance(value, self.model):
+            try:
+                value = self.model(value)
+            except ValueError:
+                available = [e.value for e in self.model]
+                raise InvalidModelFieldError("{0} is not a valid option. Use one of {1}".format(value, available))
+        super().__set__(instance, value)
+

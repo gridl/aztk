@@ -8,7 +8,6 @@ class ModelMeta(type):
     Model Meta class. This takes all the class definition and build the attributes form all the fields definitions.
     """
     def __new__(mcs, name, bases, attrs):
-        print("New model meta",name, attrs)
         attrs['_fields'] = {}
 
         for base in bases:
@@ -48,8 +47,11 @@ class Model(metaclass=ModelMeta):
     def __setitem__(self, k, v):
         if k not in self._fields:
             raise AttributeError(k)
+        try:
+            setattr(self, k, v)
+        except InvalidModelFieldError as e:
+            self._process_field_error(e, k)
 
-        setattr(self, k, v)
 
     def validate(self):
         """
@@ -60,9 +62,7 @@ class Model(metaclass=ModelMeta):
             try:
                 field.validate(getattr(self, name))
             except InvalidModelFieldError as e:
-                e.field = name
-                e.model = self
-                raise e
+                self._process_field_error(e, name)
             except InvalidModelError as e:
                 e.model = self
                 raise e
@@ -70,3 +70,12 @@ class Model(metaclass=ModelMeta):
     def _update(self, values):
         for k, v in values.items():
             self[k] = v
+
+
+    def _process_field_error(self, e: InvalidModelFieldError, field: str):
+        if not e.field:
+            e.field = field
+
+        if not e.model:
+            e.model = self
+        raise e

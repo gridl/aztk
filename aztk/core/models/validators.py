@@ -78,12 +78,23 @@ class In(Validator):
         if value not in self.choices:
             raise InvalidModelFieldError('should be in {}'.format(self.choices))
 
+class InstanceOf(Validator):
+    """
+    Check if the field is an instance of the given type
+    """
+
+    def __init__(self, cls):
+        self.type = cls
+
+    def validate(self, value):
+        if not isinstance(value, self.type):
+            raise InvalidModelFieldError(
+                "should be an instance of '{}'".format(self.type.__name__))
+
 
 class Model(Validator):
-    """This validator forces fields values to be an instance of the given
-    :class:`models.Model` subclass and also performs a validation in the
-    entire `model` object.
-    :param model: A subclass of :class:`models.Model`
+    """
+    Validate the field is a model
     """
 
     def __init__(self, model):
