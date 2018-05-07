@@ -109,12 +109,8 @@ class Model(Validator):
 
 
 class List(Validator):
-    """This validator forces field values to be a :keyword:`list`.
-    Also a list of inner :mod:`validators` could be specified to validate
-    each list element. For example, to validate a list of
-    :class:`models.Model` you could do::
-        books = fields.Field(validators.List(validators.Model(YourBookModel)))
-    :param \*validators: A list of inner validators as possitional arguments.
+    """
+    Validate the given item is a list
     """
 
     def __init__(self, *validators):

@@ -27,9 +27,11 @@ class ModelMeta(type):
 class Model(metaclass=ModelMeta):
     """
     Base class for all aztk models
+
+    To implement model wide validation implement `__validate__` method
     """
 
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls, *_args, **_kwargs):
         model = super().__new__(cls)
         model._data = {}
         return model
@@ -66,6 +68,9 @@ class Model(metaclass=ModelMeta):
             except InvalidModelError as e:
                 e.model = self
                 raise e
+
+        if hasattr(self, '__validate__'):
+            self.__validate__()
 
     def _update(self, values):
         for k, v in values.items():

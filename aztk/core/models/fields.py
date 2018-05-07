@@ -12,6 +12,10 @@ class Field:
         self.default = kwargs.get('default')
         self.required = 'default' not in kwargs
         self.validators = []
+
+        if self.required:
+            self.validators.append(aztk_validators.Required())
+
         self.validators.extend(validators)
 
         choices = kwargs.get('choices')
