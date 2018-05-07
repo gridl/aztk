@@ -1,7 +1,7 @@
 from aztk.internal import ConfigurationBase
 from aztk.error import InvalidModelError
 from aztk.utils import constants, deprecate
-
+from aztk.core.models import Model, fields
 
 class ToolkitDefinition:
     def __init__(self, versions, environments):
@@ -26,7 +26,7 @@ TOOLKIT_MAP = dict(
 )
 
 
-class Toolkit(ConfigurationBase):
+class Toolkit(Model):
     """
     Toolkit for a cluster.
     This will help pick the docker image needed
@@ -37,6 +37,13 @@ class Toolkit(ConfigurationBase):
         environment (str): Which environment to use for this toolkit
         environment_version (str): If there is multiple version for an environment you can specify which one
     """
+
+    software = fields.String()
+    version = fields.String()
+    environment = fields.String()
+    environment_version = fields.String()
+    docker_repo = fields.String()
+
     def __init__(self,
                  software: str,
                  version: str,
