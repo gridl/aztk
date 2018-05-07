@@ -1,7 +1,10 @@
-import pytest
 from enum import Enum
-from aztk.error import InvalidModelFieldError
+
+import pytest
+
 from aztk.core.models import Model, fields
+from aztk.error import InvalidModelFieldError
+
 
 class UserState(Enum):
     Creating = "creating"
@@ -51,3 +54,20 @@ def test_enum_parse_string():
     obj.validate()
 
     assert obj.state == UserState.Creating
+
+
+
+def convert_nested_dict_to_model():
+    user = User(
+        info=dict(
+            name="Highlander",
+            age=800,
+        ),
+        enabled = False,
+        state = "deleting",
+    )
+    assert isinstance(user.info, UserInfo)
+    assert user.info.name == "Highlander"
+    assert user.info.age == 800
+    assert user.enabled is False
+    assert user.state == UserState.Creating

@@ -17,13 +17,14 @@ class InvalidPluginConfigurationError(AztkError):
     pass
 
 class InvalidModelError(AztkError):
-    def __init__(self, message: str, model):
+    def __init__(self, message: str, model = None):
         super().__init__()
         self.message = message
         self.model = model
 
     def __str__(self):
-        return "{model} {message}".format(model=self.model, message=self.message)
+        model_name = self.model and self.model.__class__.__name__
+        return "{model} {message}".format(model=model_name, message=self.message)
 
 
 class MissingRequiredAttributeError(InvalidModelError):

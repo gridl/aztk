@@ -1,5 +1,6 @@
-from aztk.error import InvalidModelFieldError
+import collections
 
+from aztk.error import InvalidModelFieldError
 from . import validators as aztk_validators
 
 # pylint: disable=W0212
@@ -114,6 +115,11 @@ class Nested(Field):
 
         self.model = model
 
+    def __set__(self, instance, value):
+        if isinstance(value, collections.MutableMapping):
+            value = self.model(**value)
+
+        super().__set__(instance, value)
 
 class Enum(Field):
     """
@@ -123,10 +129,6 @@ class Enum(Field):
         super().__init__(aztk_validators.InstanceOf(model), *args, **kwargs)
 
         self.model = model
-
-
-    def __decode__(self, value: str):
-        return self.model(value)
 
     def __set__(self, instance, value):
         if not isinstance(value, self.model):
