@@ -40,7 +40,6 @@ class Model(metaclass=ModelMeta):
         self._update(kwargs)
 
     def __getitem__(self, k):
-        print("Fields", k, self._fields)
         if k not in self._fields:
             raise AttributeError(k)
 
