@@ -161,6 +161,9 @@ def cluster_config_from_dict(config: dict):
     if config.get('subnet_id') is not None:
         output.subnet_id = config['subnet_id']
 
+    if config.get('scheduling_target') is not None:
+        output.scheduling_target = SchedulingTarget(config['scheduling_target'])
+
     if config.get('username') is not None:
         output.user_configuration = UserConfiguration(
             username=config['username'])

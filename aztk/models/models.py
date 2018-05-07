@@ -157,6 +157,8 @@ class ClusterConfiguration(ConfigurationBase):
         if self.custom_scripts:
             deprecate("Custom scripts are DEPRECATED and will be removed in 0.8.0. Use plugins instead See https://aztk.readthedocs.io/en/v0.7.0/15-plugins.html")
 
+        if self.scheduling_target == SchedulingTarget.Dedicated and self.vm_count == 0:
+            raise error.InvalidModelError("Scheduling target cannot be Dedicated if dedicated vm size is 0")
 
 class RemoteLogin:
     def __init__(self, ip_address, port):
