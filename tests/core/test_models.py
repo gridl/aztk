@@ -2,7 +2,7 @@ from enum import Enum
 
 import pytest
 
-from aztk.core.models import Model, fields
+from aztk.core.models import Model, fields, ModelMergeStrategy
 from aztk.error import InvalidModelFieldError
 
 
@@ -131,3 +131,28 @@ def test_merge_with_default_value():
     record1.merge(record2)
     assert record1.name == 'foo'
     assert record1.enabled is False
+
+
+def test_merge_nested_model():
+    class ComplexModel(Model):
+        model_id = fields.String()
+        info = fields.Model(UserInfo, merge_strategy=ModelMergeStrategy.Merge)
+
+    obj1 = ComplexModel(
+        info=dict(
+            name="John",
+            age=29,
+        )
+    )
+    obj2 = ComplexModel(
+        info=dict(
+            age=38,
+        )
+    )
+
+    assert obj1.info.age == 29
+    assert obj2.info.age == 38
+
+    obj1.merge(obj2)
+    assert obj1.info.name == "John"
+    assert obj1.info.age == 38

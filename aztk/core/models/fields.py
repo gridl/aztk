@@ -5,21 +5,21 @@ from aztk.error import InvalidModelFieldError
 from . import validators as aztk_validators
 
 class ModelMergeStrategy(enum.Enum):
-    override = 1
+    Override = 1
     """
     Override the value with the other value
     """
-    merge = 2
+    Merge = 2
     """
     Try to merge value nested
     """
 
 class ListMergeStrategy(enum.Enum):
-    replace = 1
+    Replace = 1
     """
     Override the value with the other value
     """
-    append = 2
+    Append = 2
     """
     Append all the values of the new list
     """
@@ -130,14 +130,14 @@ class List(Field):
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('default', list)
-        self.merge_strategy = kwargs.get('merge_strategy', ListMergeStrategy.merge)
+        self.merge_strategy = kwargs.get('merge_strategy', ListMergeStrategy.Append)
 
         super().__init__(
             aztk_validators.List(*kwargs.get('inner_validators', [])),
             *args, **kwargs)
 
     def merge(self, instance, value):
-        if self.merge_strategy == ListMergeStrategy.append:
+        if self.merge_strategy == ListMergeStrategy.Append:
             current = instance._data[self]
             if current is None:
                 current = []
@@ -159,7 +159,7 @@ class Model(Field):
         super().__init__(aztk_validators.Model(model), *args, **kwargs)
 
         self.model = model
-        self.merge_strategy = kwargs.get('merge_strategy', ModelMergeStrategy.merge)
+        self.merge_strategy = kwargs.get('merge_strategy', ModelMergeStrategy.Merge)
 
     def __set__(self, instance, value):
         if isinstance(value, collections.MutableMapping):
@@ -168,7 +168,7 @@ class Model(Field):
         super().__set__(instance, value)
 
     def merge(self, instance, value):
-        if self.merge_strategy == ListMergeStrategy.merge:
+        if self.merge_strategy == ModelMergeStrategy.Merge:
             current = instance._data[self]
             if current is not None:
                 current.merge(value)
