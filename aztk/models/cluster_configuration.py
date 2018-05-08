@@ -27,6 +27,17 @@ class ClusterConfiguration(Model):
     file_shares = fields.Model(FileShare)
     user_configuration = fields.Model(UserConfiguration)
 
+    def __init__(self, *args, **kwargs):
+        if 'vm_count' in kwargs:
+            deprecate("vm_count is deprecated for ClusterConfiguration please use size instead")
+            kwargs['size'] = kwargs.pop('vm_count')
+
+        if 'vm_low_pri_count' in kwargs:
+            deprecate("vm_low_pri_count is deprecated for ClusterConfiguration please use size_low_pri instead")
+            kwargs['size_low_pri'] = kwargs.pop('vm_low_pri_count')
+
+        super().__init__(*args, **kwargs)
+
     def mixed_mode(self) -> bool:
         return self.size > 0 and self.size_low_pri > 0
 

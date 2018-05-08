@@ -3,7 +3,7 @@ from enum import Enum
 import pytest
 
 from aztk.core.models import Model, fields, ModelMergeStrategy, ListMergeStrategy
-from aztk.error import InvalidModelFieldError
+from aztk.error import InvalidModelFieldError, AztkAttributeError
 
 
 class UserState(Enum):
@@ -60,7 +60,7 @@ def test_raise_error_if_extra_parameters():
     class SimpleNameModel(Model):
         name = fields.String()
 
-    with pytest.raises(AttributeError, match="SimpleNameModel doesn't have an attribute called abc"):
+    with pytest.raises(AztkAttributeError, match="SimpleNameModel doesn't have an attribute called abc"):
         SimpleNameModel(name="foo", abc="123")
 
 def test_enum_invalid_type_raise_error():
