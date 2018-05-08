@@ -80,7 +80,7 @@ class Model(metaclass=ModelMeta):
 
         for name, field in other._fields.items():
             if field in other._data:
-                field.merge(self,  other._data[field])
+                field.merge(self, other._data[field])
 
         return self
 

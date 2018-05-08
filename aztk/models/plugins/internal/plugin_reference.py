@@ -27,19 +27,6 @@ class PluginReference(Model):
     target_role = fields.Enum(PluginTargetRole, default=None)
     args = fields.String(default=None)
 
-    def __init__(self,
-                 name: str = None,
-                 script: str = None,
-                 target: PluginTarget = None,
-                 target_role: PluginTargetRole = None,
-                 args: dict = None):
-        super().__init__()
-        self.name = name
-        self.script = script
-        self.target = target
-        self.target_role = target_role
-        self.args = args or dict()
-
     def get_plugin(self) -> PluginConfiguration:
         self.validate()
 

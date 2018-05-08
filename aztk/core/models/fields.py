@@ -200,7 +200,7 @@ class Enum(Field):
         self.model = model
 
     def __set__(self, instance, value):
-        if not isinstance(value, self.model):
+        if value is not None and not isinstance(value, self.model):
             try:
                 value = self.model(value)
             except ValueError:
