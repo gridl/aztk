@@ -39,17 +39,17 @@ class ClusterConfiguration(Model):
 
     def __validate__(self) -> bool:
         if self.vm_count == 0 and self.vm_low_pri_count == 0:
-            raise error.AztkError(
+            raise error.InvalidModelError(
                 "Please supply a valid (greater than 0) size or size_low_pri value either in the cluster.yaml configuration file or with a parameter (--size or --size-low-pri)"
             )
 
         if self.vm_size is None:
-            raise error.AztkError(
+            raise error.InvalidModelError(
                 "Please supply a vm_size in either the cluster.yaml configuration file or with a parameter (--vm-size)"
             )
 
         if self.mixed_mode() and not self.subnet_id:
-            raise error.AztkError(
+            raise error.InvalidModelError(
                 "You must configure a VNET to use AZTK in mixed mode (dedicated and low priority nodes). Set the VNET's subnet_id in your cluster.yaml."
             )
 

@@ -1,14 +1,6 @@
 import io
-from typing import List
 
 import azure.batch.models as batch_models
-
-from aztk import error
-from aztk.core.models import Model, fields
-from aztk.internal import ConfigurationBase
-from aztk.models.plugins import PluginConfiguration
-from aztk.utils import deprecate, helpers
-
 
 class File:
     def __init__(self, name: str, payload: io.StringIO):
