@@ -119,6 +119,9 @@ class Model(Validator):
         self.model = model
 
     def validate(self, value):
+        if not value:
+            return
+
         if not isinstance(value, self.model):
             raise InvalidModelFieldError(
                 "should be an instance of '{}'".format(self.model.__name__))
@@ -135,6 +138,9 @@ class List(Validator):
         self.validators = validators
 
     def validate(self, value):
+        if not value:
+            return
+
         if not isinstance(value, collections.MutableSequence):
             raise InvalidModelFieldError('should be a list')
 

@@ -98,8 +98,8 @@ class PluginConfiguration(aztk.models.PluginConfiguration):
 
 
 class ClusterConfiguration(aztk.models.ClusterConfiguration):
-    spark_configuration=fields.model(SparkConfiguration)
-    worker_on_master=fields.Boolean()
+    spark_configuration = fields.Model(SparkConfiguration)
+    worker_on_master = fields.Boolean()
 
 class SecretsConfiguration(aztk.models.SecretsConfiguration):
     pass

@@ -7,6 +7,10 @@ All error should inherit from `AztkError`
 class AztkError(Exception):
     pass
 
+
+class AztkAttributeError(AztkError):
+    pass
+
 class ClusterNotReadyError(AztkError):
     pass
 

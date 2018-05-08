@@ -10,6 +10,7 @@ from aztk.spark.models import (
     ClusterConfiguration,
     UserConfiguration,
 )
+from aztk.utils import deprecate
 from aztk.models import Toolkit
 from aztk.models.plugins.internal import PluginReference
 
@@ -55,70 +56,12 @@ def _load_secrets_config(
 
 
 def _merge_secrets_dict(secrets: SecretsConfiguration, secrets_config):
-    service_principal_config = secrets_config.get('service_principal')
-    if service_principal_config:
-        secrets.service_principal = ServicePrincipalConfiguration(
-            tenant_id=service_principal_config.get('tenant_id'),
-            client_id=service_principal_config.get('client_id'),
-            credential=service_principal_config.get('credential'),
-            batch_account_resource_id=service_principal_config.get(
-                'batch_account_resource_id'),
-            storage_account_resource_id=service_principal_config.get(
-                'storage_account_resource_id'),
-        )
+    if 'default' in secrets_config:
+        deprecate("secrets.yaml default key is deprecated. Place all child parameters directly at the root")
+        secrets_config = dict(**secrets_config, **secrets_config.pop('default'))
 
-    shared_key_config = secrets_config.get('shared_key')
-    batch = secrets_config.get('batch')
-    storage = secrets_config.get('storage')
-
-    if shared_key_config and (batch or storage):
-        raise aztk.error.AztkError(
-            "Shared keys must be configured either under 'sharedKey:' or under 'batch:' and 'storage:', not both."
-        )
-
-    if shared_key_config:
-        secrets.shared_key = SharedKeyConfiguration(
-            batch_account_name=shared_key_config.get('batch_account_name'),
-            batch_account_key=shared_key_config.get('batch_account_key'),
-            batch_service_url=shared_key_config.get('batch_service_url'),
-            storage_account_name=shared_key_config.get('storage_account_name'),
-            storage_account_key=shared_key_config.get('storage_account_key'),
-            storage_account_suffix=shared_key_config.get(
-                'storage_account_suffix'),
-        )
-    elif batch or storage:
-        secrets.shared_key = SharedKeyConfiguration()
-        if batch:
-            log.warning(
-                "Your secrets.yaml format is deprecated. To use shared key authentication use the shared_key key. See config/secrets.yaml.template"
-            )
-            secrets.shared_key.batch_account_name = batch.get(
-                'batchaccountname')
-            secrets.shared_key.batch_account_key = batch.get('batchaccountkey')
-            secrets.shared_key.batch_service_url = batch.get('batchserviceurl')
-
-        if storage:
-            secrets.shared_key.storage_account_name = storage.get(
-                'storageaccountname')
-            secrets.shared_key.storage_account_key = storage.get(
-                'storageaccountkey')
-            secrets.shared_key.storage_account_suffix = storage.get(
-                'storageaccountsuffix')
-
-    docker_config = secrets_config.get('docker')
-    if docker_config:
-        secrets.docker = DockerConfiguration(
-            endpoint=docker_config.get('endpoint'),
-            username=docker_config.get('username'),
-            password=docker_config.get('password'),
-        )
-
-    default_config = secrets_config.get('default')
-    # Check for ssh keys if they are provided
-    if default_config:
-        secrets.ssh_priv_key = default_config.get('ssh_priv_key')
-        secrets.ssh_pub_key = default_config.get('ssh_pub_key')
-
+    other = SecretsConfiguration.from_dict(secrets_config)
+    secrets.merge(other)
 
 def read_cluster_config(
         path: str = aztk.utils.constants.DEFAULT_CLUSTER_CONFIG_PATH

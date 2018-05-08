@@ -183,7 +183,7 @@ class Model(Field):
 
     def merge(self, instance, value):
         if self.merge_strategy == ModelMergeStrategy.Merge:
-            current = instance._data[self]
+            current = instance._data.get(self)
             if current is not None:
                 current.merge(value)
                 value = current

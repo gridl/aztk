@@ -1,5 +1,6 @@
-from aztk.error import InvalidModelError, InvalidModelFieldError, AztkError
+import yaml
 
+from aztk.error import InvalidModelError, InvalidModelFieldError, AztkError, AztkAttributeError
 from aztk.core.models import fields
 
 # pylint: disable=W0212
@@ -42,13 +43,13 @@ class Model(metaclass=ModelMeta):
 
     def __getitem__(self, k):
         if k not in self._fields:
-            raise AttributeError("{0} doesn't have an attribute called {1}".format(self.__class__.__name__, k))
+            raise AztkAttributeError("{0} doesn't have an attribute called {1}".format(self.__class__.__name__, k))
 
         return getattr(self, k)
 
     def __setitem__(self, k, v):
         if k not in self._fields:
-            raise AttributeError("{0} doesn't have an attribute called {1}".format(self.__class__.__name__, k))
+            raise AztkAttributeError("{0} doesn't have an attribute called {1}".format(self.__class__.__name__, k))
         try:
             setattr(self, k, v)
         except InvalidModelFieldError as e:
@@ -86,6 +87,18 @@ class Model(metaclass=ModelMeta):
     @classmethod
     def from_dict(cls, val: dict):
         return cls(**val)
+
+    def to_dict(self):
+        output = dict()
+        for name in self._fields.keys():
+            val = self[name]
+            if hasattr(val, 'to_dict'):
+                val = val.to_dict()
+            output[name] = val
+        return output
+
+    def __str__(self):
+        return yaml.dump(self.to_dict(), default_flow_style=False)
 
     def _update(self, values):
         for k, v in values.items():
