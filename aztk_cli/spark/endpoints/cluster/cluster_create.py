@@ -42,8 +42,8 @@ def execute(args: typing.NamedTuple):
     cluster_conf.merge(file_config)
     cluster_conf.merge(ClusterConfiguration(
         cluster_id=args.cluster_id,
-        vm_count=args.size,
-        vm_low_pri_count=args.size_low_pri,
+        size=args.size,
+        size_low_pri=args.size_low_pri,
         vm_size=args.vm_size,
         subnet_id=args.subnet_id,
         user_configuration=UserConfiguration(

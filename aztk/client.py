@@ -90,7 +90,7 @@ class Client:
             network_conf = batch_models.NetworkConfiguration(
                 subnet_id=cluster_conf.subnet_id)
         auto_scale_formula = "$TargetDedicatedNodes={0}; $TargetLowPriorityNodes={1}".format(
-            cluster_conf.vm_count, cluster_conf.vm_low_pri_count)
+            cluster_conf.size, cluster_conf.size_low_pri)
 
         # Confiure the pool
         pool = batch_models.PoolAddParameter(

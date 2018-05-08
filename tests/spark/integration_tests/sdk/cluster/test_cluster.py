@@ -39,8 +39,8 @@ def test_create_cluster():
         # TODO: make Cluster Configuration more robust, test each value
         cluster_configuration = aztk.spark.models.ClusterConfiguration(
             cluster_id=test_id+base_cluster_id,
-            vm_count=2,
-            vm_low_pri_count=0,
+            size=2,
+            size_low_pri=0,
             vm_size="standard_f2",
             subnet_id=None,
             custom_scripts=None,
@@ -74,8 +74,8 @@ def test_get_cluster():
     try:
         cluster_configuration = aztk.spark.models.ClusterConfiguration(
             cluster_id=test_id+base_cluster_id,
-            vm_count=2,
-            vm_low_pri_count=0,
+            size=2,
+            size_low_pri=0,
             vm_size="standard_f2",
             subnet_id=None,
             custom_scripts=None,
@@ -111,8 +111,8 @@ def test_list_clusters():
 
         cluster_configuration = aztk.spark.models.ClusterConfiguration(
             cluster_id=test_id+base_cluster_id,
-            vm_count=2,
-            vm_low_pri_count=0,
+            size=2,
+            size_low_pri=0,
             vm_size="standard_f2",
             subnet_id=None,
             custom_scripts=None,
@@ -141,8 +141,8 @@ def test_get_remote_login_settings():
 
         cluster_configuration = aztk.spark.models.ClusterConfiguration(
             cluster_id=test_id+base_cluster_id,
-            vm_count=2,
-            vm_low_pri_count=0,
+            size=2,
+            size_low_pri=0,
             vm_size="standard_f2",
             subnet_id=None,
             custom_scripts=None,
@@ -173,8 +173,8 @@ def test_submit():
     try:
         cluster_configuration = aztk.spark.models.ClusterConfiguration(
             cluster_id=test_id+base_cluster_id,
-            vm_count=2,
-            vm_low_pri_count=0,
+            size=2,
+            size_low_pri=0,
             vm_size="standard_f2",
             subnet_id=None,
             custom_scripts=None,
@@ -217,8 +217,8 @@ def test_get_application_log():
     try:
         cluster_configuration = aztk.spark.models.ClusterConfiguration(
             cluster_id=test_id+base_cluster_id,
-            vm_count=2,
-            vm_low_pri_count=0,
+            size=2,
+            size_low_pri=0,
             vm_size="standard_f2",
             subnet_id=None,
             custom_scripts=None,
@@ -280,8 +280,8 @@ def test_get_application_status_complete():
     try:
         cluster_configuration = aztk.spark.models.ClusterConfiguration(
             cluster_id=test_id+base_cluster_id,
-            vm_count=2,
-            vm_low_pri_count=0,
+            size=2,
+            size_low_pri=0,
             vm_size="standard_f2",
             subnet_id=None,
             custom_scripts=None,
@@ -328,8 +328,8 @@ def test_delete_cluster():
     try:
         cluster_configuration = aztk.spark.models.ClusterConfiguration(
             cluster_id=test_id+base_cluster_id,
-            vm_count=2,
-            vm_low_pri_count=0,
+            size=2,
+            size_low_pri=0,
             vm_size="standard_f2",
             subnet_id=None,
             custom_scripts=None,

@@ -17,8 +17,8 @@ class ClusterConfiguration(Model):
     """
     cluster_id = fields.String()
     toolkit = fields.Model(Toolkit)
-    vm_count = fields.Integer(default=0)
-    vm_low_pri_count = fields.Integer(default=0)
+    size = fields.Integer(default=0)
+    size_low_pri = fields.Integer(default=0)
     vm_size = fields.String()
 
     subnet_id = fields.String()
@@ -28,7 +28,7 @@ class ClusterConfiguration(Model):
     user_configuration = fields.Model(UserConfiguration)
 
     def mixed_mode(self) -> bool:
-        return self.vm_count > 0 and self.vm_low_pri_count > 0
+        return self.size > 0 and self.size_low_pri > 0
 
 
     def gpu_enabled(self):
@@ -38,7 +38,7 @@ class ClusterConfiguration(Model):
         return self.toolkit.get_docker_repo(self.gpu_enabled())
 
     def __validate__(self) -> bool:
-        if self.vm_count == 0 and self.vm_low_pri_count == 0:
+        if self.size == 0 and self.size_low_pri == 0:
             raise error.InvalidModelError(
                 "Please supply a valid (greater than 0) size or size_low_pri value either in the cluster.yaml configuration file or with a parameter (--size or --size-low-pri)"
             )
