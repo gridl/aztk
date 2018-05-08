@@ -128,13 +128,27 @@ class List(Field):
     Field that should be a list
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, model=None, **kwargs):
+        self.model = model
         kwargs.setdefault('default', list)
         self.merge_strategy = kwargs.get('merge_strategy', ListMergeStrategy.Append)
 
         super().__init__(
-            aztk_validators.List(*kwargs.get('inner_validators', [])),
-            *args, **kwargs)
+            aztk_validators.List(*kwargs.get('inner_validators', [])), **kwargs)
+
+    def __set__(self, instance, value):
+        if isinstance(value, collections.MutableSequence):
+            value = self._resolve(value)
+
+        super().__set__(instance, value)
+
+    def _resolve(self, value):
+        result = []
+        for item in value:
+            if self.model and isinstance(item, collections.MutableMapping):
+                item = self.model(**item)
+            result.append(item)
+        return result
 
     def merge(self, instance, value):
         if self.merge_strategy == ListMergeStrategy.Append:
