@@ -65,6 +65,12 @@ class Field:
     def __set__(self, instance, value):
         instance._data[self] = value
 
+    def merge(self, instance, value):
+        """
+        Method called when merging 2 model together.
+        This is overriden in some of the fields where merge can be handled differently
+        """
+        instance._data[self] = value
 
     def _default(self, model):
         if callable(self.default):
@@ -130,6 +136,14 @@ class List(Field):
             aztk_validators.List(*kwargs.get('inner_validators', [])),
             *args, **kwargs)
 
+    def merge(self, instance, value):
+        if self.merge_strategy == ListMergeStrategy.append:
+            current = instance._data[self]
+            if current is None:
+                current = []
+            value = current + value
+
+        instance._data[self] = value
 
 class Model(Field):
     """
@@ -152,6 +166,15 @@ class Model(Field):
             value = self.model(**value)
 
         super().__set__(instance, value)
+
+    def merge(self, instance, value):
+        if self.merge_strategy == ListMergeStrategy.merge:
+            current = instance._data[self]
+            if current is not None:
+                current.merge(value)
+                value = current
+
+        instance._data[self] = value
 
 class Enum(Field):
     """
