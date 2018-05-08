@@ -19,7 +19,7 @@ def test_from_dict():
 
 
 def test_from_dict_invalid_param():
-    with pytest.raises(AztkError):
+    with pytest.raises(TypeError):
         PluginReference.from_dict(dict(
             name2="invalid"
         ))

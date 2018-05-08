@@ -83,6 +83,10 @@ class Model(metaclass=ModelMeta):
 
         return self
 
+    @classmethod
+    def from_dict(cls, val: dict):
+        return cls(**val)
+
     def _update(self, values):
         for k, v in values.items():
             self[k] = v
