@@ -36,6 +36,26 @@ def test_models():
     assert user.enabled is False
     assert user.state == UserState.Creating
 
+def test_inherited_models():
+    class ServiceUser(User):
+        service = fields.String()
+
+    user = ServiceUser(
+        info=dict(
+            name="Bob",
+            age=59,
+        ),
+        enabled=False,
+        service="bus",
+    )
+    user.validate()
+
+    assert user.info.name == "Bob"
+    assert user.info.age == 59
+    assert user.enabled is False
+    assert user.state == UserState.Ready
+    assert user.service == "bus"
+
 def test_raise_error_if_extra_parameters():
     class SimpleNameModel(Model):
         name = fields.String()
